@@ -1,4 +1,4 @@
-# [`Selective Probabilistic Classifier Based on Hypothesis Testing (EUVIP 2021)`](https://ieeexplore.ieee.org/document/9483967)
+# [`Selective Probabilistic Classifier Based on Hypothesis Testing (EUVIP 2021)`] (https://ieeexplore.ieee.org/document/9483967)
 
 
 ## Requirements
