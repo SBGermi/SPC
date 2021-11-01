@@ -98,7 +98,7 @@ def resnet():
   return model
 
 def basic_block(input_tensor, filters, strides = 1):
-  x = tf.keras.layers.Conv2D(filters, 3, strides, padding = 'same')(input_tensor)
+  x = tf.keras.layers.Conv2D(filters, 3, strides = strides, padding = 'same')(input_tensor)
   x = tf.keras.layers.BatchNormalization()(x)
   x = tf.keras.layers.Activation('relu')(x)
   x = tf.keras.layers.Conv2D(filters, 3, strides = 1, padding = 'same')(x)
