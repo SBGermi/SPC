@@ -76,20 +76,18 @@ def occlusion(image):
 
 def resnet():
   image = tf.keras.layers.Input(shape = IMAGE_SHAPE, dtype = 'float32')
-  x = tf.keras.layers.ZeroPadding2D(padding = 3)(image)
-  x = tf.keras.layers.Conv2D(64, 7, strides = 2, padding = 'valid')(x)
-  x = tf.keras.layers.BatchNormalization(axis = 3)(x)
+  x = tf.keras.layers.Conv2D(64, 7, strides = 2, padding = 'same')(image)
+  x = tf.keras.layers.BatchNormalization()(x)
   x = tf.keras.layers.Activation('relu')(x)
-  x = tf.keras.layers.ZeroPadding2D(padding = 1)(x)
-  x = tf.keras.layers.MaxPooling2D(3, strides = 2)(x)
-  x = conv_block(x, 3, 64, strides = 1)
-  x = identity_block(x, 3, 64)
-  x = conv_block(x, 3, 128)
-  x = identity_block(x, 3, 128)
-  x = conv_block(x, 3, 256)
-  x = identity_block(x, 3, 256)
-  x = conv_block(x, 3, 512)
-  x = identity_block(x, 3, 512)
+  x = tf.keras.layers.MaxPooling2D(3, strides = 2, padding = 'same')(x)
+  x = basic_block(x, 64, 1)
+  x = basic_block(x, 64, 1)
+  x = basic_block(x, 128, 2)
+  x = basic_block(x, 128, 1)
+  x = basic_block(x, 256, 2)
+  x = basic_block(x, 256, 1)
+  x = basic_block(x, 512, 2)
+  x = basic_block(x, 512, 1)
   x = tf.keras.layers.GlobalAveragePooling2D()(x)
   x = tf.keras.layers.Dense(NUM_CLASSES, activation = tf.nn.softmax)(x)
 
@@ -99,25 +97,17 @@ def resnet():
 
   return model
 
-def identity_block(input_tensor, kernel_size, filters):
-  x = tf.keras.layers.Conv2D(filters, kernel_size, padding = 'same')(input_tensor)
-  x = tf.keras.layers.BatchNormalization(axis = 3)(x)
+def basic_block(input_tensor, filters, strides = 1):
+  x = tf.keras.layers.Conv2D(filters, 3, strides, padding = 'same')(input_tensor)
+  x = tf.keras.layers.BatchNormalization()(x)
   x = tf.keras.layers.Activation('relu')(x)
-  x = tf.keras.layers.Conv2D(filters, kernel_size, padding = 'same')(x)
-  x = tf.keras.layers.BatchNormalization(axis = 3)(x)
-  x = tf.keras.layers.add([x, input_tensor])
-  x = tf.keras.layers.Activation('relu')(x)
-
-  return x
-
-def conv_block(input_tensor, kernel_size, filters, strides = 2):
-  x = tf.keras.layers.Conv2D(filters, kernel_size, strides = strides, padding = 'same')(input_tensor)
-  x = tf.keras.layers.BatchNormalization(axis = 3)(x)
-  x = tf.keras.layers.Activation('relu')(x)
-  x = tf.keras.layers.Conv2D(filters, kernel_size, padding = 'same')(x)
-  x = tf.keras.layers.BatchNormalization(axis = 3)(x)
-  shortcut = tf.keras.layers.Conv2D(filters, kernel_size, strides = strides, padding = 'same')(input_tensor)
-  shortcut = tf.keras.layers.BatchNormalization(axis = 3)(shortcut)
+  x = tf.keras.layers.Conv2D(filters, 3, strides = 1, padding = 'same')(x)
+  x = tf.keras.layers.BatchNormalization()(x)
+  if strides != 1:
+    shortcut = tf.keras.layers.Conv2D(filters, 1, strides = strides)(input_tensor)
+    shortcut = tf.keras.layers.BatchNormalization()(shortcut)
+  else:
+    shortcut = input_tensor
   x = tf.keras.layers.add([x, shortcut])
   x = tf.keras.layers.Activation('relu')(x)
 
