@@ -129,7 +129,7 @@ def main(argv):
   print('Training the model ...')
   for epoch in range(FLAGS.num_epochs):
     print('Epoch {} out of {}'.format(epoch + 1, FLAGS.num_epochs))
-    train = model.fit_generator(Train_data, steps_per_epoch = Train_data.samples // FLAGS.batch_size, validation_data = Valid_data, validation_steps = Valid_data.samples // FLAGS.batch_size - 1, epochs = 1)
+    train = model.fit(Train_data, steps_per_epoch = Train_data.samples // FLAGS.batch_size, validation_data = Valid_data, validation_steps = Valid_data.samples // FLAGS.batch_size - 1, epochs = 1)
     
   print('Saving the model ...')
   model.save_weights('Results/ResNet_Norm/weight.h5', save_format = 'h5')
@@ -156,27 +156,27 @@ def main(argv):
 
   print('Testing the model ...')
   print('Original data ...')
-  test_1 = model.predict_generator(Test_Org_data, steps = Test_Org_data.samples // FLAGS.batch_size, verbose = 1)
+  test_1 = model.predict(Test_Org_data, steps = Test_Org_data.samples // FLAGS.batch_size, verbose = 1)
   np.savetxt('Results/ResNet_Norm/score_org.csv', test_1, delimiter = ',')
 
   print('Motion blur data ...')
-  test_2 = model.predict_generator(Test_motion_blur_data, steps = Test_motion_blur_data.samples // FLAGS.batch_size, verbose = 1)
+  test_2 = model.predict(Test_motion_blur_data, steps = Test_motion_blur_data.samples // FLAGS.batch_size, verbose = 1)
   np.savetxt('Results/ResNet_Norm/score_mb.csv', test_2, delimiter = ',')
 
   print('Frosted glass blur data ...')
-  test_3 = model.predict_generator(Test_frostedglass_blur_data, steps = Test_frostedglass_blur_data.samples // FLAGS.batch_size, verbose = 1)
+  test_3 = model.predict(Test_frostedglass_blur_data, steps = Test_frostedglass_blur_data.samples // FLAGS.batch_size, verbose = 1)
   np.savetxt('Results/ResNet_Norm/score_feb.csv', test_3, delimiter = ',')
     
   print('Gaussian blur data ...')
-  test_4 = model.predict_generator(Test_gaussian_blur_data, steps = Test_gaussian_blur_data.samples // FLAGS.batch_size, verbose = 1)
+  test_4 = model.predict(Test_gaussian_blur_data, steps = Test_gaussian_blur_data.samples // FLAGS.batch_size, verbose = 1)
   np.savetxt('Results/ResNet_Norm/score_gb.csv', test_4, delimiter = ',')
 
   print('Gaussian noise data ...')
-  test_5 = model.predict_generator(Test_gaussian_noise_data, steps = Test_gaussian_noise_data.samples // FLAGS.batch_size, verbose = 1)
+  test_5 = model.predict(Test_gaussian_noise_data, steps = Test_gaussian_noise_data.samples // FLAGS.batch_size, verbose = 1)
   np.savetxt('Results/ResNet_Norm/score_gn.csv', test_5, delimiter = ',')
 
   print('Salt-and-Pepper noise data ...')
-  test_6 = model.predict_generator(Test_sp_noise_data, steps = Test_sp_noise_data.samples // FLAGS.batch_size, verbose = 1)
+  test_6 = model.predict(Test_sp_noise_data, steps = Test_sp_noise_data.samples // FLAGS.batch_size, verbose = 1)
   np.savetxt('Results/ResNet_Norm/score_spn.csv', test_6, delimiter = ',')
 
   print('Gamma lower data ...')
@@ -184,11 +184,11 @@ def main(argv):
   np.savetxt('Results/ResNet_Norm/score_gl.csv', test_7, delimiter = ',')
 
   print('Gamma higher data ...')
-  test_8 = model.predict_generator(Test_gamma_higher_data, steps = Test_gamma_higher_data.samples // FLAGS.batch_size, verbose = 1)
+  test_8 = model.predict(Test_gamma_higher_data, steps = Test_gamma_higher_data.samples // FLAGS.batch_size, verbose = 1)
   np.savetxt('Results/ResNet_Norm/score_gh.csv', test_8, delimiter = ',')
 
   print('Occlusion data ...')
-  test_9 = model.predict_generator(Test_occlusion_data, steps = Test_occlusion_data.samples // FLAGS.batch_size, verbose = 1)
+  test_9 = model.predict(Test_occlusion_data, steps = Test_occlusion_data.samples // FLAGS.batch_size, verbose = 1)
   np.savetxt('Results/ResNet_Norm/score_o.csv', test_9, delimiter = ',')
 
   np.savetxt('Results/ResNet_Norm/labels.csv', Test_Org_data.labels + 1, delimiter = ',')
