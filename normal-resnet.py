@@ -16,9 +16,7 @@ NUM_CLASSES = 4
 
 flags.DEFINE_float('learning_rate', default = 0.001, help = 'Learning rate')
 flags.DEFINE_integer('num_epochs', default = 100, help = 'Number of epochs')
-flags.DEFINE_integer('batch_size', default = 30, help = 'Batch size')
-flags.DEFINE_boolean('do_train', default = True, help = 'If you want to train change to True.')
-flags.DEFINE_boolean('do_test', default = True, help = 'If you want to test change to True.')
+flags.DEFINE_integer('batch_size', default = 32, help = 'Batch size')
 FLAGS = flags.FLAGS
 
 def motion_blur(image):
