@@ -13,7 +13,7 @@ python normal_resnet.py
 ```
 or
 ```
-python prob_resnet.py
+python probability_resnet.py
 ```
 - Network output is available in `Results` folder. Analyze it with proper tools.
 
