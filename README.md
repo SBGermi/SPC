@@ -17,7 +17,7 @@ python probability_resnet.py
 ```
 - Network output is available in `Results` folder. Analyze it with proper tools.
 
-## Reference
+## Citation
 ```
 @InProceedings{BakhshiGermi2021,
     author={Bakhshi Germi, Saeed and Rahtu, Esa and Huttunen, Heikki},
