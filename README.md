@@ -6,7 +6,7 @@
 - Python and other general packages
 
 ## Usage
-- Create a data folder with `train` and `test` subfolders, and prepare the dataset. (Note that the code uses 224 x 224 x 3 images)
+- Create a `data` folder with `train` and `test` subfolders, and prepare the dataset. (Note that the code uses 224 x 224 x 3 images)
 - Run the command:
 ```
 python normal_resnet.py
